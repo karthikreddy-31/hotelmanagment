@@ -12,6 +12,14 @@ const db=mysql.createConnection({
     password:"",
     database:process.env.dbhost
 })
+db.connect((err) => {
+    if (err) {
+        console.log('Error connecting to MySQL database:', err);
+        return;
+    }  
+    console.log('Connected to MySQL database.');
+}) 
+
 app.get('/',(req,res)=>{
     res.json('hi welcome');
 });
