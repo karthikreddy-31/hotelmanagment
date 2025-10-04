@@ -6,12 +6,7 @@ const cors=require('cors');
 const app=express();
 app.use(cors());
 app.use(express.json());
-const db=mysql.createConnection({
-    host:process.env.dbhost,
-    user:process.env.dbhost,
-    password:"",
-    database:process.env.dbhost
-})
+const db=mysql.createConnection(process.env.db_url);
 db.connect((err) => {
     if (err) {
         console.log('Error connecting to MySQL database:', err);
