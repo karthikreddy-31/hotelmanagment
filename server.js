@@ -1,12 +1,21 @@
 
 const express=require('express');
-const mysql=require('mysql');
+const mysql=require('mysql2');
 const cors=require('cors');
-
+const fs = require('fs');
 const app=express();
 app.use(cors());
 app.use(express.json());
-const db=mysql.createConnection(process.env.db_url);
+const db=mysql.createConnection({
+    host:"hotelmanagment-hotelmanagment.e.aivencloud.com",
+    user:"avnadmin",
+    password:"AVNS_S5l52eheRP5J4FFSlXx",
+    database:"defaultdb",
+    port:"28514",
+    ssl:{ rejectUnauthorized: true,
+        ca:fs.readFileSync('./ca.pem')
+    }
+});
 db.connect((err) => {
     if (err) {
         console.log('Error connecting to MySQL database:', err);
