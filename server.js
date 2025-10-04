@@ -7,10 +7,10 @@ const app=express();
 app.use(cors());
 app.use(express.json());
 const db=mysql.createConnection({
-    host:"localhost",
-    user:"root",
+    host:process.env.dbhost,
+    user:process.env.dbuser,
     password:"",
-    database:"signup"
+    database:process.env.dbdatabase
 })
 
 app.post('/signup',(req,res)=>{
