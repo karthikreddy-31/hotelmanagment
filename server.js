@@ -8,11 +8,13 @@ app.use(cors());
 app.use(express.json());
 const db=mysql.createConnection({
     host:process.env.dbhost,
-    user:process.env.dbuser,
+    user:process.env.dbhost,
     password:"",
-    database:process.env.dbdatabase
+    database:process.env.dbhost
 })
-
+app.get('/',(req,res)=>{
+    res.json('hi welcome');
+});
 app.post('/signup',(req,res)=>{
     const sql="INSERT INTO login (`name`,`email`,`password`) VALUES(?)";
     const values=[
