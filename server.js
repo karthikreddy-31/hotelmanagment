@@ -3,10 +3,12 @@ const express=require('express');
 const mysql=require('mysql2');
 const cors=require('cors');
 const fs = require('fs');
+require('dotenv').config();
+
 const app=express();
 app.use(cors());
 app.use(express.json());
-const db=mysql.createConnection("mysql://avnadmin:AVNS_S5l52eheRP5J4FFSlXx@hotelmanagment-hotelmanagment.e.aivencloud.com:28514/defaultdb?ssl-mode=REQUIRED");
+const db=mysql.createConnection(process.env.DB_URL);
 db.connect((err) => {
     if (err) {
         console.log('Error connecting to MySQL database:', err);
