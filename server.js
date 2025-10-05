@@ -6,16 +6,7 @@ const fs = require('fs');
 const app=express();
 app.use(cors());
 app.use(express.json());
-const db=mysql.createConnection({
-    host:"hotelmanagment-hotelmanagment.e.aivencloud.com",
-    user:"avnadmin",
-    password:"AVNS_S5l52eheRP5J4FFSlXx",
-    database:"defaultdb",
-    port:"28514",
-    ssl:{ rejectUnauthorized: true,
-        ca:fs.readFileSync('./ca.pem')
-    }
-});
+const db=mysql.createConnection("mysql://avnadmin:AVNS_S5l52eheRP5J4FFSlXx@hotelmanagment-hotelmanagment.e.aivencloud.com:28514/defaultdb?ssl-mode=REQUIRED");
 db.connect((err) => {
     if (err) {
         console.log('Error connecting to MySQL database:', err);
@@ -28,7 +19,7 @@ app.get('/',(req,res)=>{
     res.json('hi welcome');
 });
 app.post('/signup',(req,res)=>{
-    const sql="INSERT INTO login (`name`,`email`,`password`) VALUES(?,?,?)";
+    const sql="INSERT INTO signup (`name`,`email`,`password`) VALUES(?,?,?)";
     const values=[
         req.body.name,
         req.body.email,
@@ -43,16 +34,16 @@ app.post('/signup',(req,res)=>{
 })
 
 app.post('/login',(req,res)=>{
-    const sql="SELECT * FROM login WHERE `email` = ? AND `password` = ?";
+    const sql="SELECT * FROM signup WHERE `email` = ? AND `password` = ?";
     db.query(sql,[req.body.email,req.body.password], (err,data)=>{
         if(err){
             return res.json("Error");
         }
-        if(data.length>0){
-            return res.json("Success");
+        if(data.length==0){
+            return res.json("Fail");
         }
         else{
-            return res.json("Fail");
+            return res.json("Success");
         }
         
     })
